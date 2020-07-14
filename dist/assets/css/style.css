@@ -83,6 +83,21 @@ textarea:focus {
   font-size: 1.5rem;
 }
 
+.faded {
+  animation-name: faded;
+  animation-duration: 1s;
+}
+
+@keyframes faded {
+  from {
+    opacity: 0.1;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 .form_input:-ms-input-placeholder {
   color: #999;
   opacity: 1;

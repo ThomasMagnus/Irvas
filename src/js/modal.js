@@ -1,98 +1,53 @@
-const modal = () => {
-	const modalBtn = document.querySelector('.popup_engineer_btn'),
-		  modal = document.querySelector('.popup_engineer'),
-		  popap = document.querySelector('.popup'),
-		  popapBtn = document.getElementById('popapBtn'),
-		  popapLink = document.getElementById('popap-link'),
-		  popupCalcBtn = document.querySelectorAll('.popup_calc_btn'),
-		  popupCalc = document.querySelector('.popup_calc');
+const modal = ({btnSelector, modalSelector, closeSelector}) => {
+	const modalBtn = document.querySelector(btnSelector),
+		  modal = document.querySelector(modalSelector);
+		  scroll = scrollWidth();
 
-	const getModal = (modalSelector, btn, closeSelector) => {
+	function scrollWidth() {
+		const div = document.createElement('div')
+		div.style.width = '50px'
+		div.style.height = '50px'
+		div.style.overflowY = 'scroll'
+		div.style.visibility = 'hidden'
 
-		btn.addEventListener('click', (e) => {
-			e.preventDefault();
+		document.body.append(div)
 
-			modalSelector.style.display = 'block';
-			document.body.style.overflow = 'hidden';
+		const scroll = div.offsetWidth - div.clientWidth
 
-			clearTimeout(timeout)
-		})
-	
-		const showModal = (e) => {
-			const target = e.target;
+		div.remove()
+
+		return scroll;
 		
-			if (target.nodeName == 'STRONG' || target.classList.contains(closeSelector)) {
-				modalSelector.style.display = 'none';
-				document.body.style.overflow = ''
-			}
+	}
+
+	scrollWidth()
+
+	modalBtn.addEventListener('click', (e) => {
+		e.preventDefault();
+
+		modal.style.display = 'block';
+		document.body.style.overflow = 'hidden';
+		document.body.style.marginRight = `${scroll}px`;
+
+		clearTimeout(timeout)
+	})
+
+	const hideModal = (e) => {
+		const target = e.target;
+	
+		if (target.nodeName == 'STRONG' || target.classList.contains(closeSelector)) {
+			modal.style.display = 'none';
+			document.body.style.overflow = '';
+			document.body.style.marginRight = `0px`;
 		}
-
-		modalSelector.addEventListener('click', showModal)
 	}
 
-	const getModalCalc = () => {
-
-		popupCalcBtn.forEach(item => {
-			item.addEventListener('click', (e) => {
-				e.preventDefault();
-	
-				popupCalc.style.display = 'block';
-				document.body.style.overflow = 'hidden';
-			})
-		})
-
-		popupCalc.addEventListener('click', (e) => {
-			const target = e.target;
-	
-			if (target.nodeName == 'STRONG' || target.classList.contains('popup_calc')) {
-				popupCalc.style.display = 'none';
-				document.body.style.overflow = ''
-			}
-		})
-	}
+	modal.addEventListener('click', hideModal)
 
 	const timeout = setTimeout(() => {
 		modal.style.display = 'block';
 	}, 60000)
 
-	const popupCalcButton = document.querySelector('.popup_calc_button'),
-		  width = document.getElementById('width'),
-		  height = document.getElementById('height'),
-		  popupCalcEnd = document.querySelector('.popup_calc_end');
-
-	getModal(modal, modalBtn, 'popup_engineer')
-	getModal(popap, popapBtn, 'popup')
-	getModal(popap, popapLink, 'popup')
-	getModalCalc()
-
-	popupCalcButton.addEventListener('click', () => {
-		if (width.value != '' && !isNaN(width.value) && height.value != '' && !isNaN(height.value)) {
-
-			popupCalc.style.display = 'none'
-			popupCalcEnd.style.display = 'block';
-			document.body.style.overflow = 'hidden'
-
-			width.value = '';
-			height.value = '';
-
-			width.style.border = '';
-			height.style.border = '';
-		} else {
-			width.style.border = `1px solid red`;
-			height.style.border = `1px solid red`;
-		}
-	})
-	
-	const showModal = (e) => {
-		const target = e.target;
-	
-		if (target.nodeName == 'STRONG' || target.classList.contains('popup_calc_end')) {
-			popupCalcEnd.style.display = 'none';
-			document.body.style.overflow = ''
-		}
-	}
-
-	popupCalcEnd.addEventListener('click', showModal)
 }
 
 export default modal

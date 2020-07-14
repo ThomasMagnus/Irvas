@@ -17,8 +17,8 @@ const tabs = () => {
 	
 	hideContent(glazingContent, linkTabs, 'active');
 
-	const showContent = (n, tabContentSelector, tabBtnSelector, activeClass) => {
-		tabContentSelector[n].style.display = 'block';
+	const showContent = (n, tabContentSelector, tabBtnSelector, activeClass, display = 'block') => {
+		tabContentSelector[n].style.display = display;
 		tabBtnSelector[n].classList.add(activeClass)
 	}
 
@@ -36,14 +36,14 @@ const tabs = () => {
 	})
 
 	hideContent(tabsImg, balconIconsImg, 'do_image_more')
-	showContent(0, tabsImg, balconIconsImg, 'do_image_more');
+	showContent(0, tabsImg, balconIconsImg, 'do_image_more', 'inline-block');
 
 	balconIconsImg.forEach(item => {
 		item.addEventListener('click', () => {
 			tabsImg.forEach((elem, i) => {
 				if(item.dataset.balcon == elem.dataset.balcon) {
 					hideContent(tabsImg, balconIconsImg, 'do_image_more')
-					showContent(i, tabsImg, balconIconsImg, 'do_image_more');
+					showContent(i, tabsImg, balconIconsImg, 'do_image_more', 'inline-block');
 				}
 			})
 		})

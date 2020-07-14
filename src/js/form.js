@@ -1,6 +1,6 @@
 import {getData} from './services'
 
-const getForm = () => {
+const getForm = (state) => {
 	const form = document.querySelectorAll('form'),
 		  phone = document.querySelectorAll('input[name="user_phone"]');
 
@@ -23,6 +23,12 @@ const getForm = () => {
 			e.preventDefault();
 
 			const formData = new FormData(item);
+
+			if (item.getAttribute('data-end') === 'end') {
+				for (let key in state) {
+					formData.append(key, state[key]);
+				}
+			}
 
 			const status = document.createElement('p');
 			status.classList.add('status');
